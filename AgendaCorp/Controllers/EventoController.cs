@@ -54,7 +54,7 @@ namespace AgendaCorp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventoId,Nome,Local,Data,Modalidade")] Evento evento)
+        public async Task<IActionResult> Create([Bind("EventoId,Nome,Local,Cidade,Uf,Data,Modalidade")] Evento evento)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace AgendaCorp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventoId,Nome,Local,Data,Modalidade")] Evento evento)
+        public async Task<IActionResult> Edit(int id, [Bind("EventoId,Nome,Local,Cidade,Uf,Data,Modalidade")] Evento evento)
         {
             if (id != evento.EventoId)
             {
