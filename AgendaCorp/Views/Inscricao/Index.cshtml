@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AgendaCorp.Models.Inscricao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Inscrições</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Evento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Participante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInscricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Evento.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Participante.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInscricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InscricaoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InscricaoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InscricaoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

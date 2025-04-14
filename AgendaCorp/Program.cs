@@ -30,7 +30,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
-    name: "AgendaCorp",
+    name: "Evento",
 	pattern: "{controller=Evento}/{action=Index}/{id?}");
 app.MapControllerRoute(
 	name: "Palestrante",
@@ -48,7 +48,7 @@ using (var scope = app.Services.CreateScope())
 	try
 	{
 		var context = services.GetRequiredService<AgendaCorpContext>();
-		// AgendaCorpDbInitializer.Initializer(context);
+		 AgendaCorpDbInitializer.Initializer(context);
 	}
 	catch (Exception ex)
 	{

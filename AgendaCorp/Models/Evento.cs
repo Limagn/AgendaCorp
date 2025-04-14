@@ -5,7 +5,7 @@ namespace AgendaCorp.Models
 {
 	public class Evento
 	{
-		public int EventId { get; set; }
+		public int EventoId { get; set; }
 		[Required]
 		[DisplayName("Nome do Evento")]
 		public string Nome { get; set; }
