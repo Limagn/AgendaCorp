@@ -19,6 +19,7 @@ namespace AgendaCorp.Models
 		public string Modalidade { get; set; }
 
 		public virtual ICollection<Palestrante>? Palestrantes { get; set; } = new List<Palestrante>();
+		[DisplayName("Inscrições")]
 		public virtual ICollection<Inscricao>? Inscricoes { get; set; } = new List<Inscricao>();
 
 	}

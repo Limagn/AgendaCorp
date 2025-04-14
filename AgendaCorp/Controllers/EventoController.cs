@@ -22,8 +22,12 @@ namespace AgendaCorp.Controllers
         // GET: Evento
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Eventos.ToListAsync());
-        }
+			var eventos = await _context.Eventos
+				.Include(e => e.Palestrantes)
+				.Include(e => e.Inscricoes)
+				.ToListAsync();
+			return View(eventos);
+		}
 
         // GET: Evento/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -33,9 +37,12 @@ namespace AgendaCorp.Controllers
                 return NotFound();
             }
 
-            var evento = await _context.Eventos
-                .FirstOrDefaultAsync(m => m.EventoId == id);
-            if (evento == null)
+			var evento = await _context.Eventos
+		        .Include(e => e.Palestrantes)
+		        .Include(e => e.Inscricoes).ThenInclude(i => i.Participante)
+				.FirstOrDefaultAsync(e => e.EventoId == id);
+
+			if (evento == null)
             {
                 return NotFound();
             }

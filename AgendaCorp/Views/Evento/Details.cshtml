@@ -47,8 +47,25 @@
             @Html.DisplayFor(model => model.Modalidade)
         </dd>
     </dl>
-</div>
 <div>
     <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.EventoId">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</div>
+<br />
+    <h4>Palestrantes</h4>
+    <hr/>
+    <ul>
+        @foreach (var palestrante in Model.Palestrantes)
+        {
+            <li>@palestrante.Nome (@palestrante.Area)</li>
+        }
+    </ul>
+    <h4>Inscrições</h4>
+	<hr />
+    <ul>
+        @foreach (var inscricao in Model.Inscricoes)
+        {
+            <li>@inscricao.Participante.Nome</li>
+        }
+    </ul>
 </div>

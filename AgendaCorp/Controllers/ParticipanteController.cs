@@ -22,7 +22,10 @@ namespace AgendaCorp.Controllers
         // GET: Participante
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Participantes.ToListAsync());
+			var participantes = await _context.Participantes
+	            .Include(e => e.Inscricoes)
+	            .ToListAsync();
+			return View(participantes);
         }
 
         // GET: Participante/Details/5
@@ -33,9 +36,13 @@ namespace AgendaCorp.Controllers
                 return NotFound();
             }
 
-            var participante = await _context.Participantes
-                .FirstOrDefaultAsync(m => m.ParticipanteId == id);
-            if (participante == null)
+            //var participante = await _context.Participantes
+            //    .FirstOrDefaultAsync(m => m.ParticipanteId == id);
+			var participante = await _context.Participantes
+	            .Include(e => e.Inscricoes).ThenInclude(i => i.Evento)
+				.FirstOrDefaultAsync(e => e.ParticipanteId == id);
+
+			if (participante == null)
             {
                 return NotFound();
             }

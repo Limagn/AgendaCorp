@@ -22,8 +22,12 @@ namespace AgendaCorp.Controllers
         // GET: Palestrantes
         public async Task<IActionResult> Index()
         {
-            var agendaCorpContext = _context.Palestrantes.Include(p => p.Evento);
-            return View(await agendaCorpContext.OrderBy(a => a.Nome).ToListAsync());
+            var agendaCorpContext = await _context.Palestrantes
+                .Include(p => p.Evento)
+                .OrderBy(a => a.Nome)
+                .ToListAsync();
+
+            return View(agendaCorpContext);
         }
 
         // GET: Palestrantes/Details/5

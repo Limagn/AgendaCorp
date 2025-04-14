@@ -22,6 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Telefone)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inscricoes)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,6 +39,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Telefone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inscricoes.Count)
             </td>
             <td>
                 <a asp-action="Edit" class="btn btn-primary px-sm-1 py-0" asp-route-id="@item.ParticipanteId">Edit</a>

@@ -34,3 +34,13 @@
     <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.ParticipanteId">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </div>
+<br />
+<h4>Inscrições</h4>
+<hr />
+<ul>
+    @foreach (var inscricao in Model.Inscricoes)
+    {
+        <li>@inscricao.Evento.Nome</li>
+    }
+</ul>
+</div>
