@@ -14,6 +14,6 @@ namespace AgendaCorp.Models
 		[Required]
 		public string Telefone { get; set; }
 
-		public ICollection<Inscricao> Inscricoes { get; set; }
+		public ICollection<Inscricao>? Inscricoes { get; set; }
 	}
 }

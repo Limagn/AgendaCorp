@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaCorp.Migrations
 {
     [DbContext(typeof(AgendaCorpContext))]
-    [Migration("20250414020448_inicial")]
+    [Migration("20250414035207_inicial")]
     partial class inicial
     {
         /// <inheritdoc />

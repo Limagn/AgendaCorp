@@ -23,7 +23,7 @@ namespace AgendaCorp.Controllers
         public async Task<IActionResult> Index()
         {
             var agendaCorpContext = _context.Palestrantes.Include(p => p.Evento);
-            return View(await agendaCorpContext.ToListAsync());
+            return View(await agendaCorpContext.OrderBy(a => a.Nome).ToListAsync());
         }
 
         // GET: Palestrantes/Details/5

@@ -14,8 +14,8 @@ namespace AgendaCorp.Models
 		public DateTime Data { get; set; }
 		public string Modalidade { get; set; }
 
-		public ICollection<Palestrante> Palestrantes { get; set; }
-		public ICollection<Inscricao> Inscricoes { get; set; }
+		public virtual ICollection<Palestrante>? Palestrantes { get; set; }
+		public virtual ICollection<Inscricao>? Inscricoes { get; set; }
 
 	}
 }

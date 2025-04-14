@@ -42,19 +42,19 @@ app.MapControllerRoute(
 	name: "Inscricao",
 	pattern: "{controller=Inscricao}/{action=Index}/{id?}");
 
-using (var scope = app.Services.CreateScope())
-{
-	var services = scope.ServiceProvider;
-	try
-	{
-		var context = services.GetRequiredService<AgendaCorpContext>();
-		 AgendaCorpDbInitializer.Initializer(context);
-	}
-	catch (Exception ex)
-	{
-		var logger = services.GetRequiredService<ILogger<Program>>();
-		logger.LogError(ex, "Erro ao popular o banco de dados.");
-	}
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//	var services = scope.ServiceProvider;
+//	try
+//	{
+//		var context = services.GetRequiredService<AgendaCorpContext>();
+//		 AgendaCorpDbInitializer.Initializer(context);
+//	}
+//	catch (Exception ex)
+//	{
+//		var logger = services.GetRequiredService<ILogger<Program>>();
+//		logger.LogError(ex, "Erro ao popular o banco de dados.");
+//	}
+//}
 
 app.Run();

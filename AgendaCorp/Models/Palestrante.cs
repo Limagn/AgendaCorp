@@ -15,9 +15,9 @@ namespace AgendaCorp.Models
 		[Required]
 		[DisplayName("Área de Atuação")]
 		public string Area { get; set; }
-
-		public int EventoId { get; set; }
-		public Evento Evento { get; set; }
+		[DisplayName("Evento")]
+		public int? EventoId { get; set; }
+		public Evento? Evento { get; set; }
 
 	}
 }
