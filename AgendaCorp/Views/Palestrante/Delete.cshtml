@@ -4,14 +4,7 @@
     ViewData["Title"] = "Delete";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
+<h1>Excluir</h1>
 
 <h3>Tem certeza que deseja excluir esse cadastro?</h3>
 <br />
@@ -53,9 +46,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="PalestranteId" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
+        <input type="submit" value="Excluir" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
-</body>
-</html>

@@ -39,7 +39,8 @@ namespace AgendaCorp.Controllers
             //var participante = await _context.Participantes
             //    .FirstOrDefaultAsync(m => m.ParticipanteId == id);
 			var participante = await _context.Participantes
-	            .Include(e => e.Inscricoes).ThenInclude(i => i.Evento)
+	            .Include(e => e.Inscricoes)
+                .ThenInclude(i => i.Evento)
 				.FirstOrDefaultAsync(e => e.ParticipanteId == id);
 
 			if (participante == null)

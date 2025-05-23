@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AgendaCorp.Models.Inscricao>
+
+<div class="panel panel-primary">
+	<div class="card card-title text-center text-white bg-success pt-1">
+		<h5>Inscrições realizadas</h5>
+	</div>
+	<div class="panel-body">
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(Model => Model.Evento.Nome)
+					</th>
+					<th>
+						@Html.DisplayNameFor(Model => Model.Evento.Data)
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach(var inscricao in Model)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(Model => inscricao.Evento.Nome)
+						</td>
+						<td>
+							@Html.DisplayFor(Model => inscricao.Evento.Data)
+						</td>
+						<td>
+							<a asp-controller="Inscricao" asp-route-id="@inscricao.InscricaoId" asp-action="Edit">Editar</a> |
+							<a asp-controller="Inscricao" asp-route-id="@inscricao.InscricaoId" asp-action="Details">Detalhes</a> |
+							<a asp-controller="Inscricao" asp-route-id="@inscricao.InscricaoId" asp-action="Delete">Excluir</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

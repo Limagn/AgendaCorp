@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
     <h4>Participante</h4>
@@ -31,16 +31,13 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.ParticipanteId">Edit</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.ParticipanteId">Editar</a>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </div>
-<br />
-<h4>Inscrições</h4>
 <hr />
-<ul>
-    @foreach (var inscricao in Model.Inscricoes)
-    {
-        <li>@inscricao.Evento.Nome</li>
+<br />
+<div class="col-sm-14">
+    @{
+        await Html.RenderPartialAsync("_ComInscricoes", Model.Inscricoes);
     }
-</ul>
 </div>
