@@ -60,12 +60,10 @@
             <li>@palestrante.Nome (@palestrante.Area)</li>
         }
     </ul>
-    <h4>Inscrições</h4>
 	<hr />
-    <ul>
-        @foreach (var inscricao in Model.Inscricoes)
-        {
-            <li>@inscricao.Participante.Nome</li>
+    <div class="col-sm-14">
+        @{
+            await Html.RenderPartialAsync("../Inscricao/_ComInscricoes", Model.Inscricoes);
         }
-    </ul>
+    </div>
 </div>
