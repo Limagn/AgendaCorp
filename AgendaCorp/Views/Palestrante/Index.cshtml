@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.Area)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Evento)
+                Eventos
             </th>
             <th></th>
         </tr>
@@ -47,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.Area)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Evento.Nome)
+                @Html.DisplayFor(modelItem => item.PalestranteEvento.Count)
             </td>
             <td>
                 <a asp-action="Edit" class="btn btn-primary px-sm-1 py-0" asp-route-id="@item.PalestranteId">Editar</a>

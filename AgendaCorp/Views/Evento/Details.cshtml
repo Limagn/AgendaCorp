@@ -1,5 +1,6 @@
 ﻿@model AgendaCorp.Models.Evento
 
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -53,6 +54,11 @@
 </div>
 <br />
     <hr/>
+    <div class="col-sm-14">
+        @{
+            await Html.RenderPartialAsync("../Palestrante/_ComPalestrantes", Model.PalestranteEvento);
+        }
+    </div>
 	<hr />
     <div class="col-sm-14">
         @{
