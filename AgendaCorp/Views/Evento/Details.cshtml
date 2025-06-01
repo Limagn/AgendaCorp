@@ -52,14 +52,7 @@
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </div>
 <br />
-    <h4>Palestrantes</h4>
     <hr/>
-    <ul>
-        @foreach (var palestrante in Model.Palestrantes)
-        {
-            <li>@palestrante.Nome (@palestrante.Area)</li>
-        }
-    </ul>
 	<hr />
     <div class="col-sm-14">
         @{

@@ -1,4 +1,4 @@
-﻿@model AgendaCorp.Models.Palestrante
+﻿@model AgendaCorp.ViewModels.PalestranteViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -33,12 +33,25 @@
                     <span asp-validation-for="Area" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="EventoId" class="control-label"></label>
-                    <select asp-for="EventoId" class ="form-control" asp-items="ViewBag.EventoId">
-						<option value="">--Selecione--</option>
-                    </select>
-                    <span asp-validation-for="EventoId" class="text-danger"></span>
-                </div>
+                    <label asp-for="EventoIds" class="control-label"></label>
+                    <div class="flex flex-row form-control overflow-auto" style="max-height: 110px;">
+                        @foreach (var evento in Model.EventosSelectList)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="EventoIds"
+                                       value="@evento.Value"
+                                       id="evento_@evento.Value"
+                                @(Model.EventoIds.Contains(int.Parse(evento.Value)) ? "checked" : "") />
+                                <label class="form-check-label" for="evento_@evento.Value">
+                                    @evento.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <span asp-validation-for="EventoIds" class="text-danger"></span>
+                </div> 
                 <br />
                 <div class="form-group">
                     <input type="submit" value="Salvar" class="btn btn-success" />
