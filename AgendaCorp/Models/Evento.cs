@@ -18,7 +18,8 @@ namespace AgendaCorp.Models
 		public DateTime Data { get; set; }
 		public string Modalidade { get; set; }
 
-		public ICollection<Palestrante>? Palestrantes { get; set; } = new List<Palestrante>();
+		public ICollection<PalestranteEvento>? PalestranteEvento { get; set; } = new List<PalestranteEvento>();
+
 		[DisplayName("Inscrições")]
 		public ICollection<Inscricao>? Inscricoes { get; set; } = new List<Inscricao>();
 

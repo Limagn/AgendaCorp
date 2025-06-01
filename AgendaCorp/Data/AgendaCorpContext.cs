@@ -13,5 +13,20 @@ namespace AgendaCorp.Data
 		public DbSet<Palestrante> Palestrantes { get; set; }
 		public DbSet<Participante> Participantes { get; set; }
 		public DbSet<Inscricao> Inscricoes { get; set; }
+		public DbSet<PalestranteEvento> PalestranteEventos { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<PalestranteEvento>()
+				.HasKey(pe => new { pe.PalestranteId, pe.EventoId });
+			modelBuilder.Entity<PalestranteEvento>()
+				.HasOne(e => e.Palestrante)
+				.WithMany(p => p.PalestranteEvento)
+				.HasForeignKey(pe => pe.PalestranteId);
+			modelBuilder.Entity<PalestranteEvento>()
+				.HasOne(e => e.Evento)
+				.WithMany(p => p.PalestranteEvento)
+				.HasForeignKey(pe => pe.EventoId);
+		}
 	}
 }

@@ -16,8 +16,7 @@ namespace AgendaCorp.Models
 		[DisplayName("Área de Atuação")]
 		public string Area { get; set; }
 		[DisplayName("Evento")]
-		public int? EventoId { get; set; }
-		public Evento? Evento { get; set; }
 
+		public ICollection<PalestranteEvento>? PalestranteEvento { get; set; } = new List<PalestranteEvento>();
 	}
 }

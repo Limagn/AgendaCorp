@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AgendaCorp.Data;
 using AgendaCorp.Models;
+using AgendaCorp.ViewModels;
 
 namespace AgendaCorp.Controllers
 {
@@ -23,8 +24,8 @@ namespace AgendaCorp.Controllers
         public async Task<IActionResult> Index()
         {
             var agendaCorpContext = await _context.Palestrantes
-                .Include(p => p.Evento)
-                .OrderBy(a => a.Nome)
+				.Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Evento)
+				.OrderBy(a => a.Nome)
                 .ToListAsync();
 
             return View(agendaCorpContext);
@@ -39,7 +40,7 @@ namespace AgendaCorp.Controllers
             }
 
             var palestrante = await _context.Palestrantes
-                .Include(p => p.Evento)
+                .Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Evento)
                 .FirstOrDefaultAsync(m => m.PalestranteId == id);
             if (palestrante == null)
             {
@@ -52,8 +53,17 @@ namespace AgendaCorp.Controllers
         // GET: Palestrantes/Create
         public IActionResult Create()
         {
-            ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome");
-            return View();
+            var viewModel = new PalestranteViewModel
+            {
+                EventosSelectList = _context.Eventos
+                    .Select(e => new SelectListItem
+                    {
+                        Value = e.EventoId.ToString(),
+                        Text = e.Nome
+                    }).ToList()
+            };
+            //ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome");
+            return View(viewModel);
         }
 
         // POST: Palestrantes/Create
@@ -61,16 +71,43 @@ namespace AgendaCorp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PalestranteId,Nome,Email,Telefone,Area,EventoId")] Palestrante palestrante)
+        public async Task<IActionResult> Create(PalestranteViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(palestrante);
+                var palestrante = new Palestrante
+                {
+                    Nome = model.Nome,
+                    Email = model.Email,
+                    Telefone = model.Telefone,
+                    Area = model.Area,
+                };
+
+                _context.Palestrantes.Add(palestrante);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                foreach (var eventoId in model.EventoIds)
+                {
+                    _context.PalestranteEventos.Add(new PalestranteEvento
+                    {
+                        PalestranteId = palestrante.PalestranteId,
+                        EventoId = eventoId
+                    });
+                }
+
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
             }
-            ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome", palestrante.EventoId);
-            return View(palestrante);
+
+            model.EventosSelectList = _context.Eventos
+                .Select(e => new SelectListItem
+                {
+                    Value = e.EventoId.ToString(),
+					Text = e.Nome
+				}).ToList();
+
+			//ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome", palestrante.PalestranteEvento);
+			return View(model);
         }
 
         // GET: Palestrantes/Edit/5
@@ -81,13 +118,35 @@ namespace AgendaCorp.Controllers
                 return NotFound();
             }
 
-            var palestrante = await _context.Palestrantes.FindAsync(id);
+            var palestrante = await _context.Palestrantes
+                .Include(p => p.PalestranteEvento)
+                .FirstOrDefaultAsync(p => p.PalestranteId == id);
+
             if (palestrante == null)
             {
                 return NotFound();
             }
-            ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome", palestrante.EventoId);
-            return View(palestrante);
+
+            var viewModel = new PalestranteViewModel
+            {
+                PalestranteId = palestrante.PalestranteId,
+                Nome = palestrante.Nome,
+                Email = palestrante.Email,
+                Telefone = palestrante.Telefone,
+                Area = palestrante.Area,
+                EventoIds = palestrante.PalestranteEvento
+                    .Select(pe => pe.EventoId)
+                    .ToList(),
+                EventosSelectList = _context.Eventos
+                    .Select(e => new SelectListItem
+                    {
+                        Value = e.EventoId.ToString(),
+                        Text = e.Nome
+                    }).ToList()
+            };
+
+            //ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome", palestrante.PalestranteEvento);
+            return View(viewModel);
         }
 
         // POST: Palestrantes/Edit/5
@@ -95,9 +154,9 @@ namespace AgendaCorp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PalestranteId,Nome,Email,Telefone,Area,EventoId")] Palestrante palestrante)
+        public async Task<IActionResult> Edit(int id, PalestranteViewModel model)
         {
-            if (id != palestrante.PalestranteId)
+            if (id != model.PalestranteId)
             {
                 return NotFound();
             }
@@ -106,12 +165,38 @@ namespace AgendaCorp.Controllers
             {
                 try
                 {
-                    _context.Update(palestrante);
+                    var palestrante = await _context.Palestrantes
+						.Include(p => p.PalestranteEvento)
+						.FirstOrDefaultAsync(p => p.PalestranteId == id);
+
+                    if (palestrante == null)
+					{
+						return NotFound();
+					}
+
+                    palestrante.Nome = model.Nome;
+                    palestrante.Email = model.Email;
+					palestrante.Telefone = model.Telefone;
+                    palestrante.Area = model.Area;
+
+                    _context.PalestranteEventos.RemoveRange(palestrante.PalestranteEvento);
+
+                    foreach (var eventoId in model.EventoIds)
+                    {
+                        _context.PalestranteEventos.Add(new PalestranteEvento
+                        {
+                            PalestranteId = palestrante.PalestranteId,
+                            EventoId = eventoId
+						});
+                    }
+
+                    
                     await _context.SaveChangesAsync();
+    				return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PalestranteExists(palestrante.PalestranteId))
+                    if (!PalestranteExists((int)model.PalestranteId))
                     {
                         return NotFound();
                     }
@@ -120,11 +205,31 @@ namespace AgendaCorp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+				{
+					ModelState.AddModelError(string.Empty, $"Ocorreu um erro ao atualizar o palestrante: {ex.Message}");
+
+					model.EventosSelectList = await _context.Eventos
+				        .Select(e => new SelectListItem
+				        {
+					        Value = e.EventoId.ToString(),
+					        Text = e.Nome
+				        }).ToListAsync();
+
+					return View(model);
+				}
             }
-            ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome", palestrante.EventoId);
-            return View(palestrante);
-        }
+
+			model.EventosSelectList = await _context.Eventos
+				.Select(e => new SelectListItem
+				{
+					Value = e.EventoId.ToString(),
+					Text = e.Nome
+				}).ToListAsync();
+
+            //ViewData["EventoId"] = new SelectList(_context.Eventos, "EventoId", "Nome", palestrante.PalestranteEvento);
+            return View(model);
+		}
 
         // GET: Palestrantes/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -135,7 +240,7 @@ namespace AgendaCorp.Controllers
             }
 
             var palestrante = await _context.Palestrantes
-                .Include(p => p.Evento)
+                .Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Evento)
                 .FirstOrDefaultAsync(m => m.PalestranteId == id);
             if (palestrante == null)
             {

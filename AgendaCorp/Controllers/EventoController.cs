@@ -23,8 +23,9 @@ namespace AgendaCorp.Controllers
         public async Task<IActionResult> Index()
         {
 			var eventos = await _context.Eventos
-				.Include(e => e.Palestrantes)
 				.Include(e => e.Inscricoes)
+                .Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Palestrante)
+				//.Include(e => e.Palestrantes)
 				.ToListAsync();
 			return View(eventos);
 		}
@@ -38,7 +39,7 @@ namespace AgendaCorp.Controllers
             }
 
 			var evento = await _context.Eventos
-		        .Include(e => e.Palestrantes)
+		        .Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Palestrante)
 		        .Include(e => e.Inscricoes).ThenInclude(i => i.Participante)
 				.FirstOrDefaultAsync(e => e.EventoId == id);
 
