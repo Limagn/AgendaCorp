@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AgendaCorp.Models.PalestranteEvento>
+
+<div class="panel panel-primary">
+	<div class="card card-title text-center text-white bg-success pt-1">
+		<h5>Palestrantes</h5>
+	</div>
+	<div class="panel-body">
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(Model => Model.Palestrante.Nome)
+					</th>
+					<th>
+						@Html.DisplayNameFor(Model => Model.Palestrante.Area)
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var palestrante in Model)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(Model => palestrante.Palestrante.Nome)
+						</td>
+						<td>
+							@Html.DisplayFor(Model => palestrante.Palestrante.Area)
+						</td>
+						<td>
+							@* <a asp-controller="palestrante" asp-route-id="@palestrante.PalestranteId" asp-action="Edit">Editar</a> | *@
+							<a asp-controller="palestrante" asp-route-id="@palestrante.PalestranteId" asp-action="Details">Detalhes</a> 
+							@* <a asp-controller="palestrante" asp-route-id="@palestrante.PalestranteId" asp-action="Delete">Excluir</a> *@
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

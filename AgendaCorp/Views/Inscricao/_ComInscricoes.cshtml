@@ -9,6 +9,9 @@
 			<thead>
 				<tr>
 					<th>
+						@Html.DisplayNameFor(Model => Model.Participante.Nome)
+					</th>
+					<th>
 						@Html.DisplayNameFor(Model => Model.Evento.Nome)
 					</th>
 					<th>
@@ -24,6 +27,9 @@
 				@foreach(var inscricao in Model)
 				{
 					<tr>
+						<td>
+							@Html.DisplayFor(Model => inscricao.Participante.Nome)
+						</td>
 						<td>
 							@Html.DisplayFor(Model => inscricao.Evento.Nome)
 						</td>

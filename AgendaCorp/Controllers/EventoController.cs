@@ -25,7 +25,7 @@ namespace AgendaCorp.Controllers
 			var eventos = await _context.Eventos
 				.Include(e => e.Inscricoes)
                 .Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Palestrante)
-				//.Include(e => e.Palestrantes)
+                .OrderBy(e => e.Data)
 				.ToListAsync();
 			return View(eventos);
 		}
