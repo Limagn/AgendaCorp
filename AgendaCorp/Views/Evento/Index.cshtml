@@ -50,10 +50,10 @@
                 @Html.DisplayFor(modelItem => item.Local)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cidade)
+                @(string.IsNullOrWhiteSpace(item.Cidade) ? "--" : Html.DisplayFor(modelItem => item.Cidade))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Uf)
+                @(string.IsNullOrWhiteSpace(item.Uf) ? "--" : Html.DisplayFor(modelItem => item.Uf))
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data)
