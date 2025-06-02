@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AgendaCorp.Models.Evento>
+
+<div class="panel panel-primary">
+	<div class="card card-title text-center text-white bg-success pt-1">
+		<h5>Inscrições realizadas</h5>
+	</div>
+	<div class="panel-body">
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr>
+					<th>
+						@* @Html.DisplayNameFor(Model => Model.Participante.Nome) *@
+					</th>
+					<th>
+						@Html.DisplayNameFor(Model => Model.Nome)
+					</th>
+					<th>
+						@Html.DisplayNameFor(Model => Model.Data)
+					</th>
+					<th>
+						@Html.DisplayNameFor(Model => Model)
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach(var inscricao in Model)
+				{
+					<tr>
+						<td>
+							@* @Html.DisplayFor(Model => inscricao.Participante.Nome) *@
+						</td>
+						<td>
+							@Html.DisplayFor(Model => inscricao.Nome)
+						</td>
+						<td>
+							@Html.DisplayFor(Model => inscricao.Data)
+						</td>
+						<td>
+							@* @Html.DisplayFor(Model => inscricao.DataInscricao) *@
+						</td>
+						<td>
+							@*<a asp-controller="Inscricao" asp-route-id="@inscricao.InscricaoId" asp-action="Edit">Editar</a> |
+							<a asp-controller="Inscricao" asp-route-id="@inscricao.InscricaoId" asp-action="Details">Detalhes</a> |
+							<a asp-controller="Inscricao" asp-route-id="@inscricao.InscricaoId" asp-action="Delete">Excluir</a>*@
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
