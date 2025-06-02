@@ -53,13 +53,12 @@
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </div>
 <br />
-    <hr/>
     <div class="col-sm-14">
         @{
             await Html.RenderPartialAsync("../Palestrante/_ComPalestrantes", Model.PalestranteEvento);
         }
     </div>
-	<hr />
+    <br />
     <div class="col-sm-14">
         @{
             await Html.RenderPartialAsync("../Inscricao/_ComInscricoes", Model.Inscricoes);

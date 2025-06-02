@@ -1,4 +1,4 @@
-﻿@model AgendaCorp.Models.Palestrante
+﻿@model AgendaCorp.ViewModels.PalestranteViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -34,10 +34,26 @@
             @Html.DisplayFor(model => model.Area)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PalestranteEvento)
+            @Html.DisplayNameFor(model => model.EventosSelectList)
         </dt>
-         <dd class = "col-sm-10"> 
-            @Html.DisplayFor(model => model.PalestranteEvento)
+        <dd class = "col-sm-10"> 
+            @if (Model.EventosSelectList.Any())
+            {
+                <ul>
+                    @foreach (var evento in Model.EventosSelectList)
+                    {
+                        <li>
+                            @evento.Text
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>
+                    Nenhum evento vinculado
+                </span>
+            }
          </dd>
     </dl>
 </div>
@@ -45,3 +61,4 @@
     <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.PalestranteId">Editar</a>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </div>
+<hr />

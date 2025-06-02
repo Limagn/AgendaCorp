@@ -22,9 +22,7 @@ namespace AgendaCorp.ViewModels
 
 		[DisplayName("Eventos")]
 		public List<int> EventoIds { get; set; } = new();
-
+		[DisplayName("Eventos")]
 		public List<SelectListItem>? EventosSelectList { get; set; }
-
-
 	}
 }

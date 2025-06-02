@@ -40,14 +40,34 @@ namespace AgendaCorp.Controllers
             }
 
             var palestrante = await _context.Palestrantes
-                .Include(pe => pe.PalestranteEvento).ThenInclude(p => p.Evento)
+                .Include(pe => pe.PalestranteEvento)
+                .ThenInclude(p => p.Evento)
                 .FirstOrDefaultAsync(m => m.PalestranteId == id);
+
             if (palestrante == null)
             {
                 return NotFound();
             }
 
-            return View(palestrante);
+            var viewModel = new PalestranteViewModel
+			{
+				PalestranteId = palestrante.PalestranteId,
+				Nome = palestrante.Nome,
+				Email = palestrante.Email,
+				Telefone = palestrante.Telefone,
+				Area = palestrante.Area,
+				EventoIds = palestrante.PalestranteEvento
+					.Select(pe => pe.EventoId)
+					.ToList(),
+				EventosSelectList = _context.Eventos
+					.Select(e => new SelectListItem
+					{
+						Value = e.EventoId.ToString(),
+						Text = $"{ e.Nome } | { e.Data.ToString("dd/MM/yyyy") }" 
+					}).ToList(),
+			};
+
+			return View(viewModel);
         }
 
         // GET: Palestrantes/Create
